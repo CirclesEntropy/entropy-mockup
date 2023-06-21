@@ -3,5 +3,5 @@ pub mod balance;
 
 fn main() {
     let res = resource::Resource::default();
-    println!("{:?}", res);
+    println!("{:?}", res.logic_hash);
 }
