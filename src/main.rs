@@ -1,7 +1,6 @@
 pub mod resource;
 pub mod balance;
+pub mod partialtx;
 
 fn main() {
-    let res = resource::Resource::default();
-    println!("{:?}", res.logic_hash);
 }
