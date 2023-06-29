@@ -1,55 +1,45 @@
-use rand::prelude::*;
 
-#[derive(Clone, Debug, PartialEq)]
-pub struct Denomination (Vec<u8>);
+pub type Denomination = Vec<u8>;
 
-#[derive(Clone, Debug, Copy, PartialEq, PartialOrd)]
-pub struct LogicHash (u8);
+pub type LogicHash = u8;
 
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
-pub struct ByteString (Vec<u8>);
+pub type ByteString = Vec<u8>;
 
 #[derive (Clone, Debug, PartialEq, PartialOrd)]
 pub struct Resource {
-    logic_hash : LogicHash,
-    static_data: ByteString,
-    dynamic_data: ByteString,
-    value: Option<u8>
+    pub logic_hash : LogicHash,
+    pub static_data: ByteString,
+    pub dynamic_data: ByteString,
+    pub value: u8
 }
 
-impl Default for Resource {
-    fn default () -> Self {
-        Resource{
-            // 
-            logic_hash: LogicHash (random()),
-                  
-        static_data: ByteString(vec![]),
-        dynamic_data: ByteString(vec![]),
-                 value: None}
-    }
+#[derive(Debug, PartialEq, PartialOrd, Clone)]
+pub enum ResourceKind {
+    Created,
+    Consumed
 }
+
+
 impl Resource {
 
-    pub fn create_resource (logic_hash: LogicHash, static_data: ByteString, dynamic_data: ByteString, value: Option<u8>) -> Resource
+    pub fn create_resource (logic_hash: LogicHash, static_data: ByteString, dynamic_data: ByteString, value: u8) -> Resource
     {
         Resource {logic_hash, static_data, dynamic_data, value}
     }
     pub fn denomination (self: &Self) -> Denomination
     {
-        Denomination ([self.static_data.0.clone(), self.dynamic_data.0.clone()].concat())
+        [self.static_data.clone(), self.dynamic_data.clone()].concat()
     }
 }
 
-impl Denomination {
-    pub fn resources_for_denomination (denom: Denomination, resources: Vec<&Resource>) -> Vec<&Resource>
-    {
-        resources.into_iter().filter(|&x| x.denomination() == denom).collect::<Vec<_>>()
-    }
+pub fn resources_for_denomination (denom:Denomination, resources: Vec<&Resource>) -> Vec<&Resource>
+{
+    resources.into_iter().filter(|&x| x.denomination() == denom).collect::<Vec<_>>()
+}
 
-    pub fn total_quantity_of_denomination (denom: Denomination, resources: Vec<&Resource>) -> u8
-    {
-        Self::resources_for_denomination(denom, resources).iter()
-            .map(|&x| x.value.unwrap())
-            .sum()
-    }
+pub fn total_quantity_of_denomination (denom: Denomination, resources: Vec<&Resource>) -> u8
+{
+    resources_for_denomination(denom, resources).iter()
+        .map(|&x| x.value)
+        .sum()
 }
