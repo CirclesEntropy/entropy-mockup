@@ -5,12 +5,3 @@ version = 3
 [[package]]
 name = "entropy-mockup"
 version = "0.1.0"
-dependencies = [
- "sorted-list",
-]
-
-[[package]]
-name = "sorted-list"
-version = "0.2.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "258e71e811c7dde5ad8ae2f2c07ebec6e9cce2537997a5920532b90345f774ad"
