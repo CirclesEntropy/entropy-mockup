@@ -13,4 +13,3 @@ fn init_resources() -> HashMap<&'static str, Resource> {
     resources.insert("octopus", Resource::create_resource(0, vec![1], vec![0], 0));
     resources
 }
-
