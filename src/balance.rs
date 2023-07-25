@@ -9,16 +9,16 @@ fn negate_balance(balance: &Balance) -> Balance {
     let _ = balance
         .0
         .iter()
-        .map(|(x, y)| negated.insert(x.to_vec(), 0 - y));
+        .map(|(&x, y)| negated.insert(x, 0 - y));
     Balance(negated)
 }
 
 pub fn add_balances(balance0: &Balance, balance1: &Balance) -> Balance {
     let mut new_balances: HashMap<Denomination, u8> = HashMap::new();
 
-    let _ = balance1.0.iter().map(|(k, &v2)| match balance0.0.get(k) {
-        Some(&v1) => new_balances.insert(k.to_vec(), v1 + v2),
-        None => new_balances.insert(k.to_vec(), v2),
+    let _ = balance1.0.iter().map(|(&k, &v2)| match balance0.0.get(&k) {
+        Some(&v1) => new_balances.insert(k, v1 + v2),
+        None => new_balances.insert(k, v2),
     });
     Balance(new_balances)
 }

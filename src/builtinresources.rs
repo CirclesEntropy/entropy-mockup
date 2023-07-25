@@ -1,16 +1,24 @@
-use crate::resource::Resource;
+// use crate::resource::Resource;
 
-pub mod always_valid {
-    use crate::partialtx::LogicFunction;
-    use crate::resource::LogicHash;
 
-    pub const LOGIC_FUNCTION: LogicFunction = |_, _| true;
-    pub const LOGIC_HASH: LogicHash = 0;
+
+use std::collections::HashMap;
+use crate::partialtx::LogicFunction;
+use crate::resource::LogicHash;
+
+pub const LOGIC_FUNCTION: LogicFunction = |_, _| true;
+pub const LOGIC_HASH: LogicHash = 0;
+
+pub fn make_logic_fn_map (mut map: HashMap<LogicHash, LogicFunction>) -> HashMap<LogicHash, LogicFunction> {
+    map.insert(LOGIC_HASH, LOGIC_FUNCTION);
+    map
 }
 
-const DUMMY_RESOURCE: Resource = Resource {
-    logic_hash: always_valid::LOGIC_HASH,
-    static_data: vec![],
-    dynamic_data: vec![],
-    value: 0,
-};
+
+//   pub static DUMMY_RESOURCE: Resource = Resource {
+//   logic_hash: always_valid::LOGIC_HASH,
+//   static_data: vec![],
+//   dynamic_data: vec![],
+//   value: 0,
+//   };
+

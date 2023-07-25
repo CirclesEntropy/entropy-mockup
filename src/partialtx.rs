@@ -1,10 +1,10 @@
 use crate::resource::{Resource, ResourceKind};
 
-pub type LogicFunction = fn(&ResourceKind, &PartialTx) -> bool;
+pub type LogicFunction = fn(ResourceKind, PartialTx) -> bool;
 
 #[derive(Debug, PartialEq, PartialOrd, Clone)]
 pub struct PartialTx {
-    pub resources: Vec<(ResourceKind, Resource)>,
+    pub resources: Vec<(ResourceKind, Resource)>, // better implementation?
 }
 
 impl PartialTx {

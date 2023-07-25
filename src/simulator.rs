@@ -10,7 +10,7 @@ pub fn valid_partial_txs(
     ptx.resources
         .iter()
         .map(|(kind, res)| match map.get(&res.logic_hash) {
-            Some(&f) => Ok(f(kind, ptx)),
+            Some(&f) => Ok(f(kind.clone(), ptx.clone())),
             None => Err("couldn't find the function corresponding to this hash"),
         })
         .collect()
@@ -49,8 +49,8 @@ pub fn balance_delta(ptx: &PartialTx) -> Balance {
     )
 }
 
-pub fn check_transaction(map: &HashMap<LogicHash, LogicFunction>, ptxs: Vec<&PartialTx>) -> bool {
-    let all_valid = ptxs.iter().all(|ptx| is_valid_ptx(map, ptx).unwrap());
+pub fn check_transaction(map: HashMap<LogicHash, LogicFunction>, ptxs: Vec<PartialTx>) -> bool {
+    let all_valid = ptxs.iter().all(|ptx| is_valid_ptx(&map, ptx).unwrap());
     let zero_sum_deltas = zero_balance(sum_balances(
         ptxs.iter().map(|x| balance_delta(x)).collect(),
     ));
