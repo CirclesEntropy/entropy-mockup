@@ -4,7 +4,7 @@ pub type ByteString = u8;
 
 pub type Denomination = (LogicHash, ByteString);
 
-#[derive(Clone, Copy,  Debug, PartialEq, PartialOrd)]
+#[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub struct Resource {
     pub logic_hash: LogicHash,
     pub static_data: ByteString,
@@ -33,17 +33,16 @@ impl Resource {
         }
     }
     pub fn denomination(self) -> Denomination {
-     (self.logic_hash, self.static_data)
+        (self.logic_hash, self.static_data)
     }
-     pub fn set_value(self, value: u8) -> Self {
+    pub fn set_value(self, value: u8) -> Self {
         Resource::create_resource(self.logic_hash, self.static_data, self.dynamic_data, value)
-     }
+    }
 }
 
-    pub fn quantity_of_denomination(denom: Denomination, resources: &Vec<Resource>) -> u8
-    {
-   resources
-        .into_iter()
+pub fn quantity_of_denomination(denom: Denomination, resources: &Vec<Resource>) -> u8 {
+    resources
+        .iter()
         .filter(|&x| x.denomination() == denom)
         .map(|x| x.value)
         .sum()

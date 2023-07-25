@@ -6,10 +6,7 @@ pub struct Balance(pub HashMap<Denomination, u8>);
 
 fn negate_balance(balance: &Balance) -> Balance {
     let mut negated: HashMap<Denomination, u8> = HashMap::new();
-    let _ = balance
-        .0
-        .iter()
-        .map(|(&x, y)| negated.insert(x, 0 - y));
+    let _ = balance.0.iter().map(|(&x, y)| negated.insert(x, 0 - y));
     Balance(negated)
 }
 

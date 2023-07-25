@@ -51,8 +51,6 @@ pub fn balance_delta(ptx: &PartialTx) -> Balance {
 
 pub fn check_transaction(map: HashMap<LogicHash, LogicFunction>, ptxs: Vec<PartialTx>) -> bool {
     let all_valid = ptxs.iter().all(|ptx| is_valid_ptx(&map, ptx).unwrap());
-    let zero_sum_deltas = zero_balance(sum_balances(
-        ptxs.iter().map(|x| balance_delta(x)).collect(),
-    ));
+    let zero_sum_deltas = zero_balance(sum_balances(ptxs.iter().map(balance_delta).collect()));
     all_valid && zero_sum_deltas
 }
